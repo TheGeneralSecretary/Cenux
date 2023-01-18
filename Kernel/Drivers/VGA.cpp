@@ -86,34 +86,34 @@ namespace Kernel
 
 		void VGA::EnableCursor(uint8_t start, uint8_t end)
 		{
-			Port::outb(VGA_CTRL_PORT, 0x0A);
-			Port::outb(VGA_DATA_PORT, (Port::insb(VGA_DATA_PORT) & 0xC0) | start);
-			Port::outb(VGA_CTRL_PORT, 0x0B);
-			Port::outb(VGA_DATA_PORT, (Port::insb(VGA_DATA_PORT) & 0xE0) | end);
+			CPU::Port::outb(VGA_CTRL_PORT, 0x0A);
+			CPU::Port::outb(VGA_DATA_PORT, (CPU::Port::insb(VGA_DATA_PORT) & 0xC0) | start);
+			CPU::Port::outb(VGA_CTRL_PORT, 0x0B);
+			CPU::Port::outb(VGA_DATA_PORT, (CPU::Port::insb(VGA_DATA_PORT) & 0xE0) | end);
 		}
 
 		void VGA::DisableCursor()
 		{
-			Port::outb(VGA_CTRL_PORT, 0x0A);
-			Port::outb(VGA_DATA_PORT, 0x20);
+			CPU::Port::outb(VGA_CTRL_PORT, 0x0A);
+			CPU::Port::outb(VGA_DATA_PORT, 0x20);
 		}
 
 		void VGA::SetCursor(uint16_t offset)
 		{
 			offset /= 2;
-			Port::outb(VGA_CTRL_PORT, 0x0F);
-			Port::outb(VGA_DATA_PORT, (offset & 0xFF));
-			Port::outb(VGA_CTRL_PORT, 0x0E);
-			Port::outb(VGA_DATA_PORT, ((offset >> 8) & 0xFF));
+			CPU::Port::outb(VGA_CTRL_PORT, 0x0F);
+			CPU::Port::outb(VGA_DATA_PORT, (offset & 0xFF));
+			CPU::Port::outb(VGA_CTRL_PORT, 0x0E);
+			CPU::Port::outb(VGA_DATA_PORT, ((offset >> 8) & 0xFF));
 		}
 
 		uint16_t VGA::GetCursor()
 		{
 			uint16_t offset = 0;
-			Port::outb(VGA_CTRL_PORT, 0x0F);
-			offset = Port::insb(VGA_DATA_PORT);
-			Port::outb(VGA_CTRL_PORT, 0x0E);
-			offset |= (Port::insb(VGA_DATA_PORT) << 8);
+			CPU::Port::outb(VGA_CTRL_PORT, 0x0F);
+			offset = CPU::Port::insb(VGA_DATA_PORT);
+			CPU::Port::outb(VGA_CTRL_PORT, 0x0E);
+			offset |= (CPU::Port::insb(VGA_DATA_PORT) << 8);
 			return offset;
 		}
 
