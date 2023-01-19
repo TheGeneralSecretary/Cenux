@@ -29,7 +29,7 @@ $(DRIVERS_OBJS) \
 OBJS_OUT := $(foreach item,$(OBJS),$(BUILDDIR)/$(item))
 
 .PHONY: all clean
-.SUFFIXES: .o .c .asm.o .asm
+.SUFFIXES: .o .cpp .asm.o .asm
 
 all: $(BIN)
 
@@ -41,7 +41,7 @@ $(BIN): $(OBJS) $(ARCHDIR)/linker.ld
 	rm -rf $(BUILDDIR)/$(BIN)
 	dd if=$(BUILDDIR)/$(ARCHDIR)/Boot.bin >> $(BUILDDIR)/$(BIN)
 	dd if=$(BUILDDIR)/Kernel.bin >> $(BUILDDIR)/$(BIN)
-	dd if=/dev/zero bs=512 count=100 >> $(BUILDDIR)/$(BIN)
+	dd if=/dev/zero bs=1M count=20 >> $(BUILDDIR)/$(BIN)
 
 .cpp.o:
 	@mkdir -p $(BUILDDIR)/$(@D)
