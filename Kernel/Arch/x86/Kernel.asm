@@ -32,9 +32,14 @@ _start:
 	or al, 2
 	out 0x92, al
 
+	cli
+
 	; Kernel
 	call KMain
 
-	jmp $
+	cli
+.hang:
+	hlt
+	jmp .hang
 
 times 512-($-$$) db 0
